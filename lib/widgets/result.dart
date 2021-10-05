@@ -25,17 +25,23 @@ class Result extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             resultPhrase,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 36,
               fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.center,
+            // textAlign: TextAlign.center,
           ),
           TextButton(
-            child: Text('Restart Quiz!'),
+            child: Text(
+              'Restart Quiz!',
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
             onPressed: resetHandler,
           ),
         ],

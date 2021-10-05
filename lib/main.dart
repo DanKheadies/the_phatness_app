@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import './dummy_data.dart';
+import './models/quiz_brain.dart';
+import './widgets/quiz.dart';
+import './widgets/result.dart';
 import './widgets/start_text.dart';
-import 'widgets/quiz.dart';
-import 'widgets/result.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,15 +22,20 @@ class _MyAppState extends State<MyApp> {
   AudioCache audioCache;
   AudioPlayer audioPlayer;
   bool hasStarted = false;
+  bool isReady = true;
   bool visible1 = false;
   bool visible2 = false;
   bool visible3 = false;
   bool visible4 = false;
   bool visible5 = false;
   bool visible6 = false;
+  Color spinnerColor = Colors.blue;
+  List<Icon> scoreKeeper = [];
   String titleSong = '../assets/audio/title.mp3';
+  QuizBrain quizBrain = QuizBrain();
   var _questionIndex = 0;
   var _totalScore = 0;
+  var _standardTime = 1; // 2000
   var timeout = Duration(seconds: 3);
   var ms = Duration(milliseconds: 1);
 
@@ -42,9 +48,9 @@ class _MyAppState extends State<MyApp> {
       fixedPlayer: audioPlayer,
     );
 
-    audioCache.loop(titleSong);
+    audioCache.play(titleSong);
 
-    startTimeout(1);
+    startTimer(500);
 
     if (hasStarted) {
       setState(() {
@@ -58,12 +64,15 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  void playSong(String audio) {
-    audioCache.clearAll();
-    audioCache.play(audio);
+  void setColor() {
+    Color newColor =
+        Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+    setState(() {
+      spinnerColor = newColor;
+    });
   }
 
-  Timer startTimeout(int milliseconds) {
+  Timer startTimer(int milliseconds) {
     var duration = milliseconds == null ? timeout : ms * milliseconds;
     return Timer(duration, showText);
   }
@@ -82,39 +91,83 @@ class _MyAppState extends State<MyApp> {
         visible2 = true;
       else
         visible1 = true;
+
+      if (!isReady) {
+        setState(() {
+          isReady = !isReady;
+        });
+      }
     });
 
-    if (!visible6) startTimeout(2000);
+    if (!visible6) startTimer(_standardTime);
+  }
+
+  void playSong(String audio) {
+    audioCache.clearAll();
+    audioCache.play(audio);
+  }
+
+  void _stopAudio() {
+    audioPlayer.stop();
+    audioCache.clearAll();
   }
 
   void _answerQuestion(int score) {
-    print('derp');
-    print(score);
     _totalScore += score;
 
     setState(() {
+      if (score == 4) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+
       _questionIndex = _questionIndex + 1;
     });
-    // print(_questionIndex);
 
-    // if (_questionIndex < PHATs.length) {
-    //   print('Another question!');
-    // } else {
-    //   print('No more questions please and thank you.');
-    // }
+    if (_questionIndex < quizBrain.questions3.length) {
+      if (quizBrain.questions3[_questionIndex].audio != '') {
+        playSong(quizBrain.questions3[_questionIndex].audio);
+        startTimer(quizBrain.questions3[_questionIndex].timer.round() * 1000);
+        setState(() {
+          isReady = false;
+        });
+      }
+    } else {
+      playSong('../assets/audio/bezos.mp3');
+    }
   }
 
   void _resetQuiz() {
+    _stopAudio();
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
       hasStarted = false;
+      scoreKeeper = [];
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    audioPlayer.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
           title: Text('P.H.A.T.'),
@@ -131,11 +184,24 @@ class _MyAppState extends State<MyApp> {
             vertical: 15,
           ),
           child: hasStarted
-              ? _questionIndex < questions3.length
-                  ? Quiz(
-                      answerQuestion: _answerQuestion,
-                      questionIndex: _questionIndex,
-                      questions: questions3,
+              ? _questionIndex < quizBrain.questions3.length
+                  ? RawMaterialButton(
+                      onPressed: () {
+                        setColor();
+                      },
+                      onLongPress: () {
+                        setState(() {
+                          isReady = true;
+                        });
+                      },
+                      child: Quiz(
+                        answerQuestion: _answerQuestion,
+                        questionIndex: _questionIndex,
+                        questions: quizBrain.questions3,
+                        showQuestion: isReady,
+                        color: spinnerColor,
+                        scoreKeeper: scoreKeeper,
+                      ),
                     )
                   : Result(
                       _resetQuiz,
@@ -150,42 +216,41 @@ class _MyAppState extends State<MyApp> {
                         text: 'YOU GOIN ON A BEAR HUNT',
                         size: 48,
                         isVisible: visible1,
-                        duration: 3000,
+                        duration: _standardTime + 1000,
                       ),
                       StartText(
                         text: 'Can\'t go over it',
                         size: 18,
                         isVisible: visible2,
-                        duration: 2000,
+                        duration: _standardTime,
                       ),
                       StartText(
                         text: 'Can\'t go under it',
                         size: 18,
                         isVisible: visible3,
-                        duration: 2000,
+                        duration: _standardTime,
                       ),
                       StartText(
                         text: 'Can\'t go around it',
                         size: 18,
                         isVisible: visible4,
-                        duration: 2000,
+                        duration: _standardTime,
                       ),
                       StartText(
                         text: 'Got to go through it',
                         size: 18,
                         isVisible: visible5,
-                        duration: 2000,
+                        duration: _standardTime,
                       ),
                       AnimatedOpacity(
                         curve: Curves.linear,
                         opacity: visible6 ? 1.0 : 0.0,
-                        duration: Duration(milliseconds: 2000),
+                        duration: Duration(milliseconds: _standardTime),
                         child: TextButton(
                           child: Text('Make sure sound is on n_n'),
                           style: ButtonStyle(),
                           onPressed: () {
-                            print('music file');
-                            playSong(titleSong);
+                            if (visible6) playSong(titleSong);
                           },
                         ),
                       ),
@@ -204,9 +269,12 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           onPressed: () {
-                            setState(() {
-                              hasStarted = true;
-                            });
+                            if (visible6) {
+                              setState(() {
+                                _stopAudio();
+                                hasStarted = true;
+                              });
+                            }
                           },
                         ),
                       ),

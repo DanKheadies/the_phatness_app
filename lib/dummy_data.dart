@@ -2,8 +2,8 @@
 
 import './models/question.dart';
 
-List<Question3> questions3 = [
-  Question3(
+List<Question> questions3 = [
+  Question(
     id: '001',
     question: 'When were you born?',
     answers: [
@@ -27,7 +27,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '002',
     question: 'Why did Obama send the immigrants?',
     answers: [
@@ -51,7 +51,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '003',
     question: 'Why are Cubans like socks?',
     answers: [
@@ -75,7 +75,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '004',
     question:
         'If Bo is planning on killing himself in 2030, how old will he be?',
@@ -101,7 +101,7 @@ List<Question3> questions3 = [
     // audio: 30.aac,
     timer: 141,
   ),
-  Question3(
+  Question(
     id: '005',
     question: 'How do you get from the Eastern Kingdoms to Kalimdor?',
     answers: [
@@ -125,7 +125,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '006',
     question:
         'If you were a murderous sippy cup, what would you say right before you slayed your victims?',
@@ -150,7 +150,7 @@ List<Question3> questions3 = [
     answer: 1,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '007',
     question:
         'In The Story of Dan Kheadies, what is the name of the child that has soiled himself?',
@@ -175,7 +175,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '008',
     question: 'Who is suppose to buy wards for river?',
     answers: [
@@ -199,7 +199,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '009',
     question: 'How much is a ZJ?',
     answers: [
@@ -223,7 +223,7 @@ List<Question3> questions3 = [
     answer: 4,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '010',
     question:
         'If you had one shot or one opportunity to seize everything you wanted in one moment, would you capture it or just let it slip?',
@@ -248,7 +248,7 @@ List<Question3> questions3 = [
     answer: 3,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '011',
     question: 'What goes on a Taco Dog?',
     answers: [
@@ -276,7 +276,7 @@ List<Question3> questions3 = [
     answer: 1,
     timer: 0,
   ),
-  Question3(
+  Question(
     id: '012',
     question: 'Who is the greatest rapper ever, ever?',
     answers: [
@@ -301,7 +301,7 @@ List<Question3> questions3 = [
     // audio: 'boYo.aac',
     timer: 43,
   ),
-  Question3(
+  Question(
     id: '013',
     question: 'When do you think this quiz will stop?',
     answers: [
