@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   QuizBrain quizBrain = QuizBrain();
   var _questionIndex = 0;
   var _totalScore = 0;
-  var _standardTime = 1; // 2000
+  var _standardTime = 2000;
   var timeout = Duration(seconds: 3);
   var ms = Duration(milliseconds: 1);
 
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> {
         });
       }
     } else {
-      playSong('../assets/audio/bezos.mp3');
+      if (_totalScore >= 52) playSong('../assets/audio/bezos.mp3');
     }
   }
 

@@ -1,5 +1,5 @@
-name: quiz_app
-description: A new Flutter project.
+name: the_phatness_app
+description: An app for mah boi.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   audioplayers: ^0.20.1
   cupertino_icons: ^1.0.0

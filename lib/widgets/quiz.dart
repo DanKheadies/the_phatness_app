@@ -1,12 +1,8 @@
-// import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:quiz_app/models/question.dart';
 
 import './answer.dart';
 import './question_text.dart';
 import '../models/question.dart';
-// import '../models/quiz_brain.dart';
 
 class Quiz extends StatefulWidget {
   final Function answerQuestion;
@@ -30,32 +26,6 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  bool isReady = false;
-  Duration timeout = Duration(seconds: 3);
-  Duration ms = Duration(milliseconds: 1);
-
-  List<Icon> scoreKeeper = [];
-
-  // QuizBrain quizBrain = QuizBrain();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   startTimer();
-  // }
-
-  // Timer startTimer([int milliseconds]) {
-  //   var duration = milliseconds == null ? timeout : ms * milliseconds;
-  //   return Timer(duration, showQuestion);
-  // }
-
-  // void showQuestion() {
-  //   print('ding');
-  //   setState(() {
-  //     isReady = true;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Center(
