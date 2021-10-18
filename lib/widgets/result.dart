@@ -9,14 +9,15 @@ class Result extends StatelessWidget {
   String get resultPhrase {
     String resultText;
     if (resultScore >= 52) {
-      resultText = 'Perfect. Your next clue is...';
+      resultText =
+          'Congratulations! You did it!! Now for clue #7 aka the "money shot." Have you looked under your bed today?';
     } else if (resultScore >= 45) {
       resultText =
-          'Ohhh.. You\'re pretty gosh darn close. Here\'s a prety gosh darn close hint: ';
+          'Ohhh.. You\'re pretty gosh darn close. Here\'s a prety gosh darn close hint: skate better.';
     } else if (resultScore > 20) {
-      resultText = 'Bruh.';
+      resultText = 'Pity.. You feel right into my snake liar. GG RE';
     } else {
-      resultText = 'Pity.. You feel right into my snake liar.';
+      resultText = 'Bruh... Did you even try?';
     }
     return resultText;
   }
