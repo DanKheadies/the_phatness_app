@@ -281,16 +281,6 @@ class _MyAppState extends State<MyApp> {
                     ],
                   ),
                 ),
-          // child: _questionIndex < questions3.length
-          //     ? Quiz(
-          //         answerQuestion: _answerQuestion,
-          //         questionIndex: _questionIndex,
-          //         questions: questions3,
-          //       )
-          //     : Result(
-          //         _resetQuiz,
-          //         _totalScore,
-          //       ),
         ),
       ),
     );
